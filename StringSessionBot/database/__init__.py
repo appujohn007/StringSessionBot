@@ -6,7 +6,7 @@ client = None
 db = None
 
 def start():
-    global client, db
+    global client, db, SESSION
     if DATABASE_URL == "":
         global count_
         if count_ < 1:
