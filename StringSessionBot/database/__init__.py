@@ -1,21 +1,23 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
-
+from pymongo import MongoClient
 from env import DATABASE_URL
 
 count_ = 0
-def start() -> scoped_session:
-    if DATABASE_URL == "":
-        if count_ < 1:
-            count += 1
-            return print("Database url not provided..\nBut this time I won't stop 😉")
-        return
-    engine = create_engine(DATABASE_URL)
-    BASE.metadata.bind = engine
-    BASE.metadata.create_all(engine)
-    return scoped_session(sessionmaker(bind=engine, autoflush=False))
+client = None
+db = None
 
+def start():
+    global client, db
+    if DATABASE_URL == "":
+        global count_
+        if count_ < 1:
+            count_ += 1
+            print("Database URL not provided..\nBut this time I won't stop 😉")
+        return
+    # Establish MongoDB connection
+    client = MongoClient(DATABASE_URL)
+    db = client.get_default_database()  # Get the default database or specify db name
+    
 if DATABASE_URL != "":
-    BASE = declarative_base()
-    SESSION = start()
+    start()
+
+# Now `db` can be used to interact with the MongoDB database
