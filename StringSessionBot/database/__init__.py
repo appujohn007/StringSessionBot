@@ -15,7 +15,7 @@ def start():
         return
     # Establish MongoDB connection
     client = MongoClient(DATABASE_URL)
-    db = client.get_default_database()  # Get the default database or specify db name
+    db = client["dynamic_database_name"]
     
 if DATABASE_URL != "":
     start()
