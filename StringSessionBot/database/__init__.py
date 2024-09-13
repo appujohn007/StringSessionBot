@@ -16,7 +16,7 @@ def start():
     # Establish MongoDB connection
     client = MongoClient(DATABASE_URL)
     db = client["dynamic_database_name"]
-    
+    SESSION = db
 if DATABASE_URL != "":
     start()
 
